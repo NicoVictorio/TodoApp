@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/todoListFragment">
+
+    <fragment
+        android:id="@+id/createTodoFragment"
+        android:name="com.ubaya.todoapp.view.CreateTodoFragment"
+        android:label="Create Todo"
+        tools:layout="@layout/fragment_todo_list" />
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.ubaya.todoapp.view.TodoListFragment"
+        android:label="Todo Lists"
+        tools:layout="@layout/fragment_create_todo">
+        <action
+            android:id="@+id/actionCreateTodo"
+            app:destination="@id/createTodoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/actionEditTodo"
+            app:destination="@id/editTodoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTodoFragment"
+        android:name="com.ubaya.todoapp.view.EditTodoFragment"
+        android:label="Edit Todo">
+        <argument
+            android:name="uuid"
+            app:argType="integer" />
+    </fragment>
+</navigation>
