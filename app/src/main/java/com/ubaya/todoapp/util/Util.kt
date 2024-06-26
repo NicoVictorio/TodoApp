@@ -34,18 +34,16 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
             "ALTER TABLE todo ADD COLUMN is_done INTEGER DEFAULT 0 not null")
     }
 }
-//fun buildDb(context:Context):TodoDatabase{
-//    val db = TodoDatabase.buildDatabase(context)
-//    return db
-//}
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            "ALTER TABLE todo ADD COLUMN todo_date INTEGER DEFAULT 0 not null")
+    }
+}
 
 fun buildDb(context: Context):TodoDatabase {
-    val db = Room.databaseBuilder(context,
-        TodoDatabase::class.java, DB_NAME)
-        .addMigrations(MIGRATION_1_2)
-        .addMigrations(MIGRATION_2_3)
-        .build()
-
+    val db = TodoDatabase.buildDatabase(context)
     return db
 }
 
@@ -87,12 +85,11 @@ class NotificationHelper(val context: Context){
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
-            try {
-                NotificationManagerCompat.from(context)
-                    .notify(NOTIFICATION_ID, notification)
-            } catch (e:SecurityException) {
-                Log.e("error notif: ", e.toString())
-            }
+        try {
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+        } catch (e:SecurityException) {
+            Log.e("error notif: ", e.toString())
+        }
     }
 }
 
